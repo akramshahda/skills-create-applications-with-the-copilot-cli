@@ -202,4 +202,174 @@ describe('Calculator', () => {
       expect(result).toBeCloseTo(0.3, 5);
     });
   });
+
+  describe('Modulo', () => {
+    it('should calculate modulo of two positive numbers', () => {
+      expect(calc.modulo(5, 2)).toBe(1);
+    });
+
+    it('should calculate modulo with exact divisor', () => {
+      expect(calc.modulo(10, 5)).toBe(0);
+    });
+
+    it('should calculate modulo with negative dividend', () => {
+      expect(calc.modulo(-5, 2)).toBe(-1);
+    });
+
+    it('should calculate modulo with negative divisor', () => {
+      expect(calc.modulo(5, -2)).toBe(1);
+    });
+
+    it('should calculate modulo with both negative numbers', () => {
+      expect(calc.modulo(-5, -2)).toBe(-1);
+    });
+
+    it('should calculate modulo with decimal numbers', () => {
+      expect(calc.modulo(5.5, 2)).toBeCloseTo(1.5, 5);
+    });
+
+    it('should throw error when modulo by zero', () => {
+      expect(() => calc.modulo(10, 0)).toThrow('Cannot perform modulo by zero');
+    });
+
+    it('should handle modulo of zero', () => {
+      expect(calc.modulo(0, 5)).toBe(0);
+    });
+
+    it('should calculate modulo with large numbers', () => {
+      expect(calc.modulo(1000000, 3)).toBe(1);
+    });
+  });
+
+  describe('Power (Exponentiation)', () => {
+    it('should calculate power of two positive numbers', () => {
+      expect(calc.power(2, 3)).toBe(8);
+    });
+
+    it('should calculate power with exponent of zero', () => {
+      expect(calc.power(5, 0)).toBe(1);
+    });
+
+    it('should calculate power with exponent of one', () => {
+      expect(calc.power(5, 1)).toBe(5);
+    });
+
+    it('should calculate power with negative exponent', () => {
+      expect(calc.power(2, -2)).toBe(0.25);
+    });
+
+    it('should calculate power with negative base', () => {
+      expect(calc.power(-2, 3)).toBe(-8);
+    });
+
+    it('should calculate power with negative base and even exponent', () => {
+      expect(calc.power(-2, 2)).toBe(4);
+    });
+
+    it('should calculate power with decimal base', () => {
+      expect(calc.power(2.5, 2)).toBe(6.25);
+    });
+
+    it('should calculate power with decimal exponent', () => {
+      expect(calc.power(4, 0.5)).toBe(2);
+    });
+
+    it('should calculate power with large exponent', () => {
+      expect(calc.power(2, 10)).toBe(1024);
+    });
+
+    it('should calculate power of zero base', () => {
+      expect(calc.power(0, 5)).toBe(0);
+    });
+
+    it('should calculate power with both numbers as one', () => {
+      expect(calc.power(1, 100)).toBe(1);
+    });
+  });
+
+  describe('Square Root', () => {
+    it('should calculate square root of perfect square', () => {
+      expect(calc.squareRoot(16)).toBe(4);
+    });
+
+    it('should calculate square root of non-perfect square', () => {
+      expect(calc.squareRoot(2)).toBeCloseTo(1.414, 3);
+    });
+
+    it('should calculate square root of zero', () => {
+      expect(calc.squareRoot(0)).toBe(0);
+    });
+
+    it('should calculate square root of one', () => {
+      expect(calc.squareRoot(1)).toBe(1);
+    });
+
+    it('should calculate square root of decimal number', () => {
+      expect(calc.squareRoot(2.25)).toBe(1.5);
+    });
+
+    it('should calculate square root of very small number', () => {
+      expect(calc.squareRoot(0.0001)).toBe(0.01);
+    });
+
+    it('should calculate square root of large number', () => {
+      expect(calc.squareRoot(10000)).toBe(100);
+    });
+
+    it('should throw error when square root of negative number', () => {
+      expect(() => calc.squareRoot(-4)).toThrow('Cannot calculate square root of a negative number');
+    });
+
+    it('should throw error when square root of negative one', () => {
+      expect(() => calc.squareRoot(-1)).toThrow('Cannot calculate square root of a negative number');
+    });
+
+    it('should throw error when square root of very small negative number', () => {
+      expect(() => calc.squareRoot(-0.0001)).toThrow('Cannot calculate square root of a negative number');
+    });
+  });
+
+  describe('Example Operations from Extended Image', () => {
+    it('should calculate 5 % 2 = 1', () => {
+      expect(calc.modulo(5, 2)).toBe(1);
+    });
+
+    it('should calculate 2 ^ 3 = 8', () => {
+      expect(calc.power(2, 3)).toBe(8);
+    });
+
+    it('should calculate √16 = 4', () => {
+      expect(calc.squareRoot(16)).toBe(4);
+    });
+  });
+
+  describe('Result Tracking with Advanced Operations', () => {
+    it('should track result after modulo', () => {
+      calc.modulo(10, 3);
+      expect(calc.getResult()).toBe(1);
+    });
+
+    it('should track result after power', () => {
+      calc.power(3, 2);
+      expect(calc.getResult()).toBe(9);
+    });
+
+    it('should track result after square root', () => {
+      calc.squareRoot(25);
+      expect(calc.getResult()).toBe(5);
+    });
+
+    it('should update result when chaining operations', () => {
+      calc.add(2, 3);
+      expect(calc.getResult()).toBe(5);
+      calc.power(calc.getResult(), 2);
+      expect(calc.getResult()).toBe(25);
+    });
+
+    it('should clear result after advanced operations', () => {
+      calc.modulo(10, 3);
+      calc.clear();
+      expect(calc.getResult()).toBe(0);
+    });
+  });
 });
